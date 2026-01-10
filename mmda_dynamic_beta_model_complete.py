@@ -794,7 +794,7 @@ class MMDADynamicBetaModel:
         ax.legend(fontsize=12, loc='upper left', framealpha=0.9)
         ax.grid(True, alpha=0.3)
         
-        # Add performance statistics
+        # Add performance statistics (positioned in bottom right to avoid legend overlap)
         if len(self.results['models']) > 0:
             textstr = "Recent Period Performance (2022-2025 RMSE):\n"
             for name, model in self.results['models'].items():
@@ -803,8 +803,9 @@ class MMDADynamicBetaModel:
             
             textstr = textstr.rstrip('\n')
             props = dict(boxstyle='round,pad=0.5', facecolor='white', alpha=0.9, edgecolor='gray')
-            ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=10,
-                   verticalalignment='top', bbox=props, family='monospace')
+            ax.text(0.98, 0.02, textstr, transform=ax.transAxes, fontsize=10,
+                   verticalalignment='bottom', horizontalalignment='right', 
+                   bbox=props, family='monospace')
         
         plt.tight_layout()
         
