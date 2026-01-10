@@ -1,0 +1,24 @@
+Model,Parameter,Estimate,Interpretation
+Enhanced,alpha,0.26627647382887276,Base margin when Fed Funds = 0%: 0.2663%
+Enhanced,k,0.16705126881630505,Transition steepness: 0.1671 (moderate speed of beta increase)
+Enhanced,m,4.874339182825026,Inflection point: 4.87% Fed Funds rate (competition threshold)
+Enhanced,beta_min,0.2521351949012357,Minimum deposit sensitivity: 25.2%
+Enhanced,beta_max,0.6115856342810655,Maximum deposit sensitivity: 61.2%
+Enhanced,gamma_fhlb,0.4263207325795189,FHLB spread coefficient: 0.4263 (liquidity premium effect)
+Enhanced,gamma_term,-0.3175530723674185,Term spread coefficient: -0.3176 (yield curve effect)
+Vol Adjusted,alpha,0.19882593968891307,Base margin when Fed Funds = 0%: 0.1988%
+Vol Adjusted,k,0.585765482830379,Transition steepness: 0.5858 (moderate speed of beta increase)
+Vol Adjusted,m,2.9922248550697104,Inflection point: 2.99% Fed Funds rate (competition threshold)
+Vol Adjusted,beta_min,0.4,Minimum deposit sensitivity: 40.0%
+Vol Adjusted,beta_max,0.7,Maximum deposit sensitivity: 70.0%
+Vol Adjusted,gamma_fhlb,0.6928762385691362,FHLB spread coefficient: 0.6929 (liquidity premium effect)
+Vol Adjusted,gamma_term,-0.2030841567356675,Term spread coefficient: -0.2031 (yield curve effect)
+Vol Adjusted,lambda,0.22380477243704686,Volatility dampening: 22.4% reduction per unit vol ratio
+Quadratic,alpha,0.22515719964401687,Base margin when Fed Funds = 0%: 0.2252%
+Quadratic,a,0.4845118044450621,Quadratic constant term: 0.4845
+Quadratic,b,-0.057047142966303734,Quadratic linear coefficient: -0.0570
+Quadratic,c,0.009557538141712027,Quadratic squared coefficient: 0.0096
+Quadratic,beta_min,0.35,Minimum deposit sensitivity: 35.0%
+Quadratic,beta_max,0.5048471012611327,Maximum deposit sensitivity: 50.5%
+Quadratic,gamma_fhlb,0.46663576749817426,FHLB spread coefficient: 0.4666 (liquidity premium effect)
+Quadratic,gamma_term,-0.2983322500138033,Term spread coefficient: -0.2983 (yield curve effect)

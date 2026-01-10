@@ -1,0 +1,26 @@
+EXECUTIVE SUMMARY
+================
+
+Model Performance (Volatility-Adjusted Dynamic Beta Model):
+- R² = 0.9858
+- Adjusted R² = 0.9845  
+- RMSE = 0.1077%
+- Recent Period RMSE (2022-2025) = 0.1180%
+
+Improvement vs. Challenger Models:
+- 36.9% lower forecast errors than Enhanced Logistic
+- 36.7% lower forecast errors than Quadratic Model
+
+Key Parameter Estimates:
+- β_min = 0.4000 (40.0% minimum deposit sensitivity)
+- β_max = 0.7000 (70.0% maximum deposit sensitivity)
+- m = 2.9922 (competition inflection at 2.99% Fed Funds)
+- k = 0.5858 (transition steepness)
+- λ = 0.2238 (22.4% volatility dampening)
+
+Diagnostic Test Results:
+- Jarque-Bera (Normality): Pass
+- Breusch-Godfrey (No Autocorrelation): Pass
+- White's Test (Homoscedasticity): Pass
+
+Model Status: VALIDATED - Ready for MRM Review

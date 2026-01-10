@@ -1,0 +1,101 @@
+{
+  "model_name": "Money Market Deposit Account Dynamic Beta Repricing Model",
+  "model_type": "Interest Rate Risk - Deposit Repricing",
+  "model_owner": "Chih L. Chen, BTRM, CFA, FRM",
+  "department": "Asset Liability Management / Treasury",
+  "document_version": "1.0",
+  "review_status": "Draft - Pending MRM Review",
+  "distribution_list": "Model Risk Management, ALM, Treasury, Risk Management",
+  "recommended_model": "Volatility-Adjusted",
+  "sample_start": "January 2017",
+  "sample_end": "March 2025",
+  "data_frequency": "Monthly end-of-period values",
+  "data_sources": [
+    {
+      "variable": "ILMDHYLD",
+      "source": "Bloomberg/Bankrate",
+      "description": "High-yield MMDA rate",
+      "role": "Dependent variable"
+    },
+    {
+      "variable": "FEDL01",
+      "source": "FRED/Bloomberg",
+      "description": "Federal Funds Effective Rate",
+      "role": "Primary driver"
+    },
+    {
+      "variable": "FHLK3MSPRD",
+      "source": "Bloomberg",
+      "description": "FHLB vs SOFR 3M liquidity premium",
+      "role": "Funding stress indicator"
+    },
+    {
+      "variable": "1Y_3M_SPRD",
+      "source": "Bloomberg",
+      "description": "1Y-3M SOFR OIS term spread",
+      "role": "Yield curve slope"
+    },
+    {
+      "variable": "Vol_24m",
+      "source": "Calculated",
+      "description": "24-month rolling volatility",
+      "role": "Uncertainty measure"
+    }
+  ],
+  "parameter_bounds": [
+    {
+      "parameter": "β_min",
+      "lower": "0.25",
+      "upper": "0.40",
+      "rationale": "Minimum competitive response"
+    },
+    {
+      "parameter": "β_max",
+      "lower": "0.50",
+      "upper": "0.70",
+      "rationale": "Maximum sustainable passthrough"
+    },
+    {
+      "parameter": "k",
+      "lower": "0.01",
+      "upper": "5.00",
+      "rationale": "Moderate transition speed"
+    },
+    {
+      "parameter": "m",
+      "lower": "0.50",
+      "upper": "5.00",
+      "rationale": "Observable rate range"
+    },
+    {
+      "parameter": "λ",
+      "lower": "0.00",
+      "upper": "1.00",
+      "rationale": "Bounded volatility effect"
+    }
+  ],
+  "primary_stakeholders": [
+    "**Asset Liability Management (ALM):** Primary business user for NII and EVE calculations",
+    "**Treasury:** Interest rate risk assessment and hedging decisions",
+    "**Finance:** Earnings forecasting and budgeting processes",
+    "**Risk Management:** IRRBB reporting and regulatory stress testing"
+  ],
+  "secondary_stakeholders": [
+    "**Model Risk Management:** Model validation and governance oversight",
+    "**Internal Audit:** Model control testing and compliance verification",
+    "**Regulatory Relations:** Examination support and regulatory reporting",
+    "**Technology:** Model implementation and system integration"
+  ],
+  "primary_use_cases": [
+    "Net Interest Income (NII) sensitivity analysis and forecasting",
+    "Economic Value of Equity (EVE) calculations for IRRBB reporting",
+    "Duration estimation for non-maturity deposit portfolios",
+    "Regulatory stress testing (CCAR, DFAST, Basel III IRRBB)",
+    "Funds Transfer Pricing (FTP) framework calibration",
+    "Asset-liability management strategic planning"
+  ],
+  "fig_data_dashboard": "outputs/visualizations/01_data_dashboard.png",
+  "fig_model_fit": "outputs/visualizations/02_model_fit_comparison.png",
+  "fig_beta_evolution": "outputs/visualizations/03_beta_evolution.png",
+  "fig_residual_analysis": "outputs/visualizations/04_residual_analysis_vol_adjusted.png"
+}
