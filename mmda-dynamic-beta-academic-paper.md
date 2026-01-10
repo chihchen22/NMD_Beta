@@ -9,7 +9,13 @@
 
 ## Abstract
 
-Traditional deposit beta models assume constant pass-through rates from policy benchmarks to deposit rates—an assumption that the Federal Reserve's aggressive 2022-2025 tightening cycle has thoroughly exposed as inadequate. This paper presents a volatility-adjusted dynamic beta framework for money market deposit account (MMDA) repricing that captures the nonlinear, rate-dependent nature of deposit competition. Grounded in the deposits channel theory of monetary policy transmission, the model employs a logistic specification that allows deposit sensitivity to evolve with interest rate levels, augmented by a volatility dampening mechanism that accounts for reduced pass-through during uncertain rate environments. Using monthly data from January 2017 through March 2025 (n = 99), the volatility-adjusted model achieves superior predictive accuracy (R² = 0.9858, RMSE = 0.1077%) compared to static alternatives, with 37% lower forecast errors during the volatile 2022-2025 period. The model's parameters admit clear economic interpretations: deposit betas range from 40% at low rates to 70% at high rates, with an inflection point at approximately 3% Fed Funds where competitive pressures intensify. These findings have direct implications for Net Interest Income forecasting, Economic Value of Equity calculations, and Funds Transfer Pricing frameworks in bank asset-liability management.
+Here is the uncomfortable truth about deposit beta models: they assume banks reprice deposits at a constant rate regardless of where interest rates sit. The Federal Reserve's aggressive 2022-2025 tightening cycle exposed just how wrong that assumption can be.
+
+This paper presents a volatility-adjusted dynamic beta framework for money market deposit account (MMDA) repricing that captures what practitioners have long observed but rarely modeled: deposit competition intensifies as rates rise. The approach is grounded in the deposits channel theory of monetary policy transmission and employs a logistic specification that allows deposit sensitivity to evolve with interest rate levels. A volatility dampening mechanism accounts for reduced pass-through during uncertain rate environments.
+
+Using monthly data from January 2017 through March 2025 (n = 99), the volatility-adjusted model achieves R² of 0.9858 and RMSE of 0.1077%, with 37% lower forecast errors during the volatile 2022-2025 period compared to static alternatives. The parameters tell a clear economic story: deposit betas range from 40% at low rates to 70% at high rates, with an inflection point at approximately 3% Fed Funds where competitive pressures intensify.
+
+For ALM practitioners, these findings have direct implications for Net Interest Income forecasting, Economic Value of Equity calculations, and Funds Transfer Pricing frameworks.
 
 **Keywords:** deposit beta, interest rate risk, asset-liability management, money market deposits, monetary policy transmission, IRRBB
 
@@ -19,11 +25,15 @@ Traditional deposit beta models assume constant pass-through rates from policy b
 
 ## 1. Introduction
 
-Understanding how deposit rates respond to changes in market interest rates is fundamental to bank asset-liability management (ALM). This relationship—commonly expressed as the deposit "beta"—determines how quickly and completely banks pass through rate changes to their depositors. Getting this right has material implications for Net Interest Income (NII) forecasting, Economic Value of Equity (EVE) calculations, and ultimately, strategic balance sheet positioning (Drechsler et al., 2017).
+If you have spent any time in bank asset-liability management, you know the deposit beta conversation. Someone asks: "What beta are we using for MMDAs?" The answer is usually a single number, perhaps 50% or 60%, applied uniformly across all rate scenarios.
 
-At its core, the deposit beta captures the tension between two competing forces. On one hand, banks seek to maximize net interest margins by minimizing deposit costs. On the other hand, competitive pressures and depositor rate-sensitivity constrain how much pricing power banks can exercise. The relative strength of these forces varies systematically with the level of interest rates—a dynamic that traditional static beta models fail to capture.
+The problem? That single number masks enormous variation in how deposits actually reprice.
 
-The Federal Reserve's aggressive tightening cycle beginning in March 2022 exposed these limitations dramatically. As the federal funds rate rose from near-zero to over 5% in approximately 18 months, static models significantly underestimated deposit repricing, leading to forecast errors that cascaded through NII projections and interest rate risk in the banking book (IRRBB) metrics. Banks relying on these models found themselves with unexpected margin compression and risk measurement gaps.
+Understanding how deposit rates respond to changes in market interest rates is fundamental to bank ALM. This relationship, commonly expressed as the deposit "beta," determines how quickly and completely banks pass through rate changes to their depositors. Getting this right has material implications for Net Interest Income (NII) forecasting, Economic Value of Equity (EVE) calculations, and ultimately, strategic balance sheet positioning (Drechsler et al., 2017).
+
+At its core, the deposit beta captures the tension between two competing forces. Banks seek to maximize net interest margins by minimizing deposit costs. Competitive pressures and depositor rate-sensitivity constrain how much pricing power banks can exercise. The relative strength of these forces varies systematically with the level of interest rates, and traditional static beta models fail to capture this dynamic.
+
+The Federal Reserve's aggressive tightening cycle beginning in March 2022 exposed these limitations dramatically. As the federal funds rate rose from near-zero to over 5% in approximately 18 months, static models significantly underestimated deposit repricing. The forecast errors cascaded through NII projections and IRRBB metrics. Banks relying on these models found themselves with unexpected margin compression and risk measurement gaps.
 
 This paper addresses these shortcomings by developing a volatility-adjusted dynamic beta framework specifically designed for money market deposit accounts (MMDAs). The model captures three key phenomena:
 
@@ -31,7 +41,7 @@ This paper addresses these shortcomings by developing a volatility-adjusted dyna
 2. **Volatility dampening:** Pass-through rates decline during periods of rate uncertainty
 3. **Market condition effects:** Liquidity premiums and yield curve shape influence deposit pricing
 
-The remainder of this paper proceeds as follows. Section 2 reviews the theoretical foundation and relevant literature. Section 3 describes the data and methodology. Section 4 presents empirical results and model validation. Section 5 discusses implications for ALM practice. Section 6 concludes.
+The remainder of this paper proceeds as follows. Section 2 reviews the theoretical foundation and relevant literature. Section 3 describes the data and methodology. Section 4 presents empirical results and model validation. Section 5 discusses implications for ALM practice. Section 6 addresses limitations. Section 7 concludes.
 
 ---
 
@@ -41,21 +51,23 @@ The remainder of this paper proceeds as follows. Section 2 reviews the theoretic
 
 The theoretical foundation for dynamic deposit betas rests on the "deposits channel" of monetary policy transmission developed by Drechsler, Savov, and Schnabl (2017). Their seminal work demonstrates that banks' market power in deposit markets varies systematically with interest rate levels, creating a powerful but often overlooked channel through which monetary policy affects the real economy.
 
-The core insight is intuitive: when rates are low, depositors have few attractive alternatives and accept below-market returns, giving banks substantial pricing power. Savings accounts earning 0.01% when money market funds yield 0.10% represent minimal opportunity cost for depositors. However, as rates rise, competitive pressures intensify as depositors become more rate-sensitive and alternatives (such as money market mutual funds and Treasury bills) become meaningfully more attractive. This forces higher pass-through rates to retain deposits.
+The core insight is intuitive. When rates are low, depositors have few attractive alternatives and accept below-market returns, giving banks substantial pricing power. Think about it: a savings account earning 0.01% when money market funds yield 0.10% represents minimal opportunity cost for depositors. Why bother moving money for a few extra basis points?
 
-Drechsler et al. (2017) document this phenomenon empirically, showing that deposit spreads (the difference between market rates and deposit rates) widen as rates increase. They estimate that a 100 basis point increase in the federal funds rate leads to only a 40-60 basis point increase in deposit rates on average—but this average masks significant variation across the rate cycle.
+But as rates rise, competitive pressures intensify. Depositors become more rate-sensitive. Alternatives such as money market mutual funds and Treasury bills become meaningfully more attractive. This forces higher pass-through rates to retain deposits.
+
+Drechsler et al. (2017) document this phenomenon empirically, showing that deposit spreads (the difference between market rates and deposit rates) widen as rates increase. They estimate that a 100 basis point increase in the federal funds rate leads to only a 40-60 basis point increase in deposit rates on average. But this average masks significant variation across the rate cycle.
 
 ### 2.2 Nonlinear Pass-Through Dynamics
 
-Building on the deposits channel framework, subsequent research has explored the nonlinear nature of deposit pass-through. Driscoll and Judson (2013) analyze deposit rate dynamics at U.S. commercial banks and find evidence of asymmetric adjustment—rates adjust more slowly downward than upward, and pass-through rates vary with the level and direction of rate changes.
+Building on the deposits channel framework, subsequent research has explored the nonlinear nature of deposit pass-through. Driscoll and Judson (2013) analyze deposit rate dynamics at U.S. commercial banks and find evidence of asymmetric adjustment. Rates adjust more slowly downward than upward, and pass-through rates vary with the level and direction of rate changes.
 
 Hannan and Berger (1991) document price rigidity in deposit markets, attributing it to menu costs, customer relationships, and imperfect competition. Their work suggests that deposit rates exhibit "stickiness" that varies with market conditions, supporting the case for state-dependent beta specifications.
 
-More recently, Drechsler, Savov, and Schnabl (2021) extended their analysis to examine deposit competition during the post-2008 low-rate environment, finding that banks' deposit franchises became increasingly valuable as rates approached zero—the so-called "deposit franchise value" that insulates bank equity from rate risk.
+More recently, Drechsler, Savov, and Schnabl (2021) extended their analysis to examine deposit competition during the post-2008 low-rate environment. They found that banks' deposit franchises became increasingly valuable as rates approached zero. This "deposit franchise value" insulates bank equity from rate risk in ways that traditional models do not capture.
 
 ### 2.3 Volatility and Uncertainty Effects
 
-A less-explored dimension of deposit pricing is the role of interest rate volatility. During periods of rate uncertainty, both banks and depositors face increased option value in waiting. Banks may delay competitive repricing when the rate trajectory is unclear, while depositors may exhibit reduced rate-sensitivity when uncertain whether current rates represent temporary or permanent shifts.
+A less-explored dimension of deposit pricing is the role of interest rate volatility. During periods of rate uncertainty, both banks and depositors face increased option value in waiting. Banks may delay competitive repricing when the rate trajectory is unclear. Depositors may exhibit reduced rate-sensitivity when uncertain whether current rates represent temporary or permanent shifts.
 
 This paper contributes to the literature by explicitly modeling volatility effects on deposit pass-through. The volatility dampening mechanism captures the empirical observation that deposit betas tend to compress during volatile rate environments, a phenomenon that became apparent during the rapid 2022 rate increases.
 
@@ -63,7 +75,7 @@ This paper contributes to the literature by explicitly modeling volatility effec
 
 From a practical ALM perspective, accurate deposit beta estimation is essential for several key applications:
 
-**Net Interest Income Sensitivity:** NII projections under rate scenarios depend critically on assumed deposit betas. Underestimating betas leads to overstated NII in rising rate scenarios; overestimating leads to excessive conservatism (Office of the Comptroller of the Currency, 2020).
+**Net Interest Income Sensitivity:** NII projections under rate scenarios depend critically on assumed deposit betas. Underestimating betas leads to overstated NII in rising rate scenarios. Overestimating leads to excessive conservatism (Office of the Comptroller of the Currency, 2020).
 
 **Economic Value of Equity:** EVE calculations require duration estimates for non-maturity deposits, which depend directly on assumed repricing behavior. The Basel Committee on Banking Supervision (2016) specifically addresses behavioral assumptions for non-maturity deposits in its IRRBB framework.
 
@@ -75,7 +87,7 @@ From a practical ALM perspective, accurate deposit beta estimation is essential 
 
 ### 3.1 Data Sources and Sample
 
-The analysis uses monthly data spanning January 2017 through March 2025 (n = 99 observations), a period that encompasses the post-crisis low-rate environment, the 2022-2023 tightening cycle, and the subsequent rate plateau. This sample provides substantial variation in interest rate levels (0.05% to 5.33% federal funds rate) necessary for identifying rate-dependent dynamics.
+The analysis uses monthly data spanning January 2017 through March 2025 (n = 99 observations). This period encompasses the post-crisis low-rate environment, the 2022-2023 tightening cycle, and the subsequent rate plateau. The sample provides substantial variation in interest rate levels (0.05% to 5.33% federal funds rate) necessary for identifying rate-dependent dynamics.
 
 Table 1 presents the primary variables and their sources.
 
@@ -189,7 +201,7 @@ Table 4 presents parameter estimates for the recommended volatility-adjusted mod
 | $\gamma_{TERM}$ | -0.2031 | Negative term spread effect |
 | $\lambda$ | 0.2238 | 22.4% volatility dampening |
 
-The parameter estimates are economically sensible. The inflection point at approximately 3% aligns with the historical threshold where deposit competition has intensified—roughly the level where money market fund yields become attractive enough to induce meaningful deposit outflows. The volatility dampening factor of 22.4% indicates that a one-standard-deviation increase in rate volatility reduces effective pass-through by approximately 22%.
+The parameter estimates tell a sensible economic story. The inflection point at approximately 3% aligns with the historical threshold where deposit competition has intensified. This is roughly the level where money market fund yields become attractive enough to induce meaningful deposit outflows. The volatility dampening factor of 22.4% indicates that a one-standard-deviation increase in rate volatility reduces effective pass-through by approximately 22%.
 
 ### 4.2 Model Performance Comparison
 
@@ -203,7 +215,7 @@ Table 5 compares performance across model specifications.
 | **Volatility-Adjusted** | **0.9858** | **0.9845** | **0.1077** | **-425.2** | **-404.5** | **0.1180** |
 | Quadratic | 0.9749 | 0.9727 | 0.1432 | -368.8 | -348.0 | 0.1865 |
 
-The volatility-adjusted model dominates across all metrics. The improvement is particularly pronounced during the 2022-2025 period—the out-of-sample RMSE is 37% lower than the enhanced logistic alternative (0.1180% vs. 0.1871%). This improvement is economically meaningful: for a bank with $10 billion in MMDA balances, a 7 basis point improvement in rate forecasting translates to approximately $7 million in NII projection accuracy.
+The volatility-adjusted model dominates across all metrics. The improvement is particularly pronounced during the 2022-2025 period, where the out-of-sample RMSE is 37% lower than the enhanced logistic alternative (0.1180% vs. 0.1871%). This improvement is economically meaningful: for a bank with $10 billion in MMDA balances, a 7 basis point improvement in rate forecasting translates to approximately $7 million in NII projection accuracy.
 
 ![Figure 2: Model Fit Comparison Across Specifications](outputs/visualizations/02_model_fit_comparison.png)
 
@@ -234,9 +246,9 @@ Table 7 summarizes residual diagnostic tests.
 | Breusch-Godfrey (autocorrelation) | p = 0.000 | p = 0.000 | p = 0.000 |
 | White's (heteroscedasticity) | p = 0.762 | p = 0.004 | p = 0.000 |
 
-All models pass the Jarque-Bera normality test. However, all models exhibit residual autocorrelation—a common finding in monthly financial time series that reflects persistent shocks not captured by the specification. Importantly, the volatility-adjusted model uniquely passes White's test for homoscedasticity (p = 0.762), indicating stable variance properties that support more reliable inference.
+All models pass the Jarque-Bera normality test. However, all models exhibit residual autocorrelation, a common finding in monthly financial time series that reflects persistent shocks not captured by the specification. Importantly, the volatility-adjusted model uniquely passes White's test for homoscedasticity (p = 0.762), indicating stable variance properties that support more reliable inference.
 
-The autocorrelation finding suggests that future model enhancements should consider dynamic specifications (e.g., error correction models) or Newey-West standard errors for robust inference.
+The autocorrelation finding suggests that future model enhancements should consider dynamic specifications (such as error correction models) or Newey-West standard errors for robust inference.
 
 ### 4.5 Dynamic Beta Evolution
 
@@ -271,17 +283,17 @@ For banks conducting NII forecasting, incorporating rate-dependent betas can mat
 
 ### 5.2 Economic Value of Equity
 
-EVE calculations require duration estimates for non-maturity deposits. The effective duration of a deposit liability depends directly on its repricing beta—higher betas imply shorter effective durations and lower interest rate risk. The dynamic beta framework suggests that deposit durations should be modeled as state-dependent, shortening as rates rise.
+EVE calculations require duration estimates for non-maturity deposits. The effective duration of a deposit liability depends directly on its repricing beta. Higher betas imply shorter effective durations and lower interest rate risk. The dynamic beta framework suggests that deposit durations should be modeled as state-dependent, shortening as rates rise.
 
 This has implications for IRRBB reporting under Basel III standards, which require banks to document and justify behavioral assumptions for non-maturity deposits (Basel Committee on Banking Supervision, 2016).
 
 ### 5.3 Funds Transfer Pricing
 
-FTP systems that use static betas may misprize deposit products across rate environments. When rates are low, static FTP understates the value of stable deposit funding; when rates are high, it overstates this value. Dynamic beta-based FTP would better align transfer prices with actual economic risk, improving business unit performance measurement and pricing incentives.
+FTP systems that use static betas may misprize deposit products across rate environments. When rates are low, static FTP understates the value of stable deposit funding. When rates are high, it overstates this value. Dynamic beta-based FTP would better align transfer prices with actual economic risk, improving business unit performance measurement and pricing incentives.
 
 ### 5.4 Stress Testing
 
-For regulatory stress testing (CCAR, DFAST), the volatility adjustment component is particularly relevant. Stress scenarios typically involve both rate level changes and increased volatility. The model's volatility dampening mechanism suggests that pass-through may be lower during stress events than rate-level alone would imply—a consideration for scenario design and interpretation.
+For regulatory stress testing (CCAR, DFAST), the volatility adjustment component is particularly relevant. Stress scenarios typically involve both rate level changes and increased volatility. The model's volatility dampening mechanism suggests that pass-through may be lower during stress events than rate-level alone would imply. This is an important consideration for scenario design and interpretation.
 
 ---
 
@@ -293,7 +305,7 @@ Several limitations warrant acknowledgment:
 
 **Autocorrelation:** The presence of residual autocorrelation suggests that the model does not fully capture deposit rate dynamics. Error correction specifications or ARMA error structures may improve fit and inference.
 
-**Structural Stability:** The model assumes stable competitive dynamics in deposit markets. Structural changes—such as increased fintech competition or regulatory changes—could alter the parameter estimates. Regular recalibration and monitoring are essential.
+**Structural Stability:** The model assumes stable competitive dynamics in deposit markets. Structural changes, such as increased fintech competition or regulatory changes, could alter the parameter estimates. Regular recalibration and monitoring are essential.
 
 **Product Scope:** The model is estimated on high-yield MMDA rates. Extension to other deposit products (savings accounts, interest checking, CDs) would require separate estimation, as competitive dynamics likely differ across products.
 
@@ -303,11 +315,11 @@ Several limitations warrant acknowledgment:
 
 This paper develops and validates a volatility-adjusted dynamic beta model for MMDA repricing that addresses fundamental limitations of traditional static approaches. The model captures three key empirical regularities: rate-dependent deposit sensitivity, volatility dampening effects, and market condition influences on deposit pricing.
 
-The empirical results are compelling. The volatility-adjusted specification achieves R-squared of 0.9858 and demonstrates 37% lower forecast errors than alternatives during the volatile 2022-2025 period. The parameter estimates are economically interpretable: deposit betas range from 40% to 70%, with an inflection point near 3% Fed Funds where competitive pressures intensify.
+The empirical results speak for themselves. The volatility-adjusted specification achieves R-squared of 0.9858 and demonstrates 37% lower forecast errors than alternatives during the volatile 2022-2025 period. The parameter estimates are economically interpretable: deposit betas range from 40% to 70%, with an inflection point near 3% Fed Funds where competitive pressures intensify.
 
-For ALM practitioners, these findings suggest that static beta assumptions—still common in industry practice—may materially misstate interest rate risk, particularly in environments of changing rates and elevated volatility. Incorporating dynamic, state-dependent betas into NII forecasting, EVE calculations, and FTP frameworks can improve both risk measurement accuracy and strategic decision-making.
+For ALM practitioners, these findings suggest that static beta assumptions, still common in industry practice, may materially misstate interest rate risk. This is particularly true in environments of changing rates and elevated volatility. Incorporating dynamic, state-dependent betas into NII forecasting, EVE calculations, and FTP frameworks can improve both risk measurement accuracy and strategic decision-making.
 
-In a sense, the dynamic beta model represents a building block in the ALM toolkit—a more sophisticated approach to understanding how deposit costs evolve with market conditions. As interest rate environments continue to shift, models that capture these dynamics will become increasingly valuable for banks seeking to manage their balance sheets effectively.
+The dynamic beta model represents a building block in the ALM toolkit. It offers a more sophisticated approach to understanding how deposit costs evolve with market conditions. As interest rate environments continue to shift, models that capture these dynamics will become increasingly valuable for banks seeking to manage their balance sheets effectively.
 
 ---
 
