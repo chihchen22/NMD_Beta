@@ -1,105 +1,102 @@
-# MMDA Dynamic Beta Repricing Model
-
-**A Volatility-Adjusted Framework for Money Market Deposit Account Rate Sensitivity**
+# Dynamic Deposit Betas: An Asymmetric Volatility-Adjusted S-Curve Framework for MMDA Rate Sensitivity
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![SSRN](https://img.shields.io/badge/SSRN-6269838-blue)](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6269838)
 
 **Author:** Chih L. Chen, BTRM, CFA, FRM
 
+**Paper:** [Dynamic Deposit Betas: An Asymmetric Volatility-Adjusted S-Curve Framework for MMDA Rate Sensitivity](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6269838) (SSRN, February 2026)
+
 ## Overview
 
-This repository contains the complete implementation and documentation for a dynamic beta model designed to estimate Money Market Deposit Account (MMDA) rate sensitivity to changes in policy interest rates. Unlike traditional static beta approaches, this model captures the nonlinear, rate-dependent nature of deposit competition that was dramatically exposed during the Federal Reserve's 2022-2025 tightening cycle.
+This repository implements an 8-parameter dynamic beta model for estimating Money Market Deposit Account (MMDA) rate sensitivity to policy rate changes. The model captures the nonlinear, rate-dependent nature of deposit competition exposed during the Fed’s 2022-2025 tightening cycle.
 
-### Key Features
+The core specification combines a logistic S-curve (rate-level-dependent beta), asymmetric volatility dampening (distinct behavior in rising vs. falling rate environments), autoregressive smoothing (bounded month-to-month beta changes), and a Nerlove partial adjustment filter for scenario forecasting. Standard errors use the Huber-White sandwich estimator with Newey-West HAC weighting.
 
-- **Dynamic Beta Estimation:** Logistic framework capturing how deposit betas evolve with interest rate levels
-- **Volatility Adjustment:** Accounts for reduced pass-through during volatile rate environments  
-- **Full Reproducibility:** All results traceable to source data with complete output exports
-- **SR11-7 Compliant Documentation:** Model development document meeting regulatory standards
-- **Comprehensive Validation:** Challenger models, diagnostic tests, and out-of-sample performance
-
-### Model Performance
+### Key Results
 
 | Metric | Value |
 |--------|-------|
-| R² | 0.9858 |
-| RMSE | 0.1077% |
-| Out-of-Sample RMSE (2022-2025) | 0.1180% |
-| Improvement vs. Static Beta | 37% lower forecast errors |
+| In-sample R² | 0.9870 |
+| RMSE | 10.3 bps |
+| Parameters | 8 |
+| Partial adjustment speed (θ) | 0.47 |
+| Asymmetric dampening | λ_up = 25.5%, λ_down = 22.3% (p < 0.001) |
 
 ## Quick Start
 
 ### Prerequisites
 
 ```bash
-pip install pandas numpy matplotlib seaborn scipy statsmodels scikit-learn openpyxl
+pip install -r requirements.txt
 ```
 
-### Run the Analysis
+### Reproduce All Results
 
 ```bash
-python run_analysis_with_outputs.py
+python regenerate_all_outputs.py      # Core model comparison (14 files)
+python scenario_shock_analysis.py     # Parallel shock scenarios with partial adjustment
+python paper_enhancements.py          # OOS validation, duration, portfolio example, bootstrap
+python regenerate_figures.py          # Data dashboard and visualization figures
 ```
 
-This will generate all outputs in the `outputs/` directory:
-- CSV/Excel files with all model results
-- PNG visualizations
-- Text reports
+### Generate Paper PDF
 
-### View Results
+Requires [pandoc](https://pandoc.org/) and a LaTeX distribution (e.g., MiKTeX with XeLaTeX):
 
-After running, check:
-- `outputs/model_results/` - Parameter estimates, performance metrics, predictions
-- `outputs/visualizations/` - Charts and diagnostic plots
-- `outputs/reports/` - Executive summary and detailed analysis report
+```bash
+python convert_to_pdf.py
+```
 
 ## Repository Structure
 
 ```
 NMD_Beta/
-├── README.md                              # This file
-├── LICENSE                                # MIT License
-├── requirements.txt                       # Python dependencies
-├── bankratemma.csv                        # Source data (Bloomberg/Bankrate/FRED)
-├── mmda_dynamic_beta_model_complete.py    # Core model implementation
-├── run_analysis_with_outputs.py           # Reproducible analysis script
-├── generate_model_document.py             # Auto-generate model documentation
-├── mmda-dynamic-beta-model-dev-doc.md     # Full model documentation (SR11-7 format)
-├── mmda-dynamic-beta-academic-paper.md    # Academic paper version (APA format)
-├── config/
-│   └── document_config.json               # Configuration for document generator
-├── templates/
-│   └── model_development_document_template.md  # Document template
-└── outputs/                               # Generated outputs
-    ├── data/                              # Processed data files
-    ├── model_results/                     # Parameter estimates, metrics
-    ├── visualizations/                    # Charts and plots
-    ├── reports/                           # Analysis reports
-    └── *.pdf                              # Generated PDF documents
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── bankratemma.csv                        # Source data (Jan 2017 - Mar 2025, n=99)
+│
+├── enhanced_dynamic_beta_model.py         # Core model: AR smoothing + sandwich SEs
+├── mmda_dynamic_beta_model_complete.py    # Full model framework class
+├── two_regime_ecm_vs_ml.py               # 2-regime ECM challenger model
+│
+├── regenerate_all_outputs.py             # Master output generator (14 files)
+├── scenario_shock_analysis.py            # Scenario analysis with partial adjustment
+├── paper_enhancements.py                 # OOS, robustness, duration, portfolio, bootstrap
+├── regenerate_figures.py                 # Data dashboard and core visualizations
+├── regenerate_figures_with_ols.py        # Model fit comparison chart
+├── run_asymmetric_analysis.py            # Asymmetric beta evolution chart
+│
+├── mmda-dynamic-beta-academic-paper-v2.md   # Paper source (Markdown)
+├── convert_to_pdf.py                        # Markdown to PDF via pandoc + XeLaTeX
+├── pandoc_preamble.tex                      # LaTeX preamble for PDF styling
+│
+└── outputs/
+    ├── v2_comparison/                    # Model comparison outputs (14 files)
+    ├── scenario_analysis/                # Shock scenario results (4 files)
+    ├── paper_enhancements/               # OOS, duration, portfolio, bootstrap figures
+    ├── figures/                          # Asymmetric beta and model charts
+    └── visualizations/                   # Data dashboard and fit comparison
 ```
 
 ## Model Specification
 
-### Dynamic Beta Function
+The model uses an asymmetric volatility-adjusted logistic beta with AR smoothing to prevent volatile month-to-month jumps. For forward-looking scenarios, a Nerlove partial adjustment filter governs the transition path, where roughly half the gap between the current deposit rate and its model-implied equilibrium closes each month. See the [paper](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6269838) for the full specification.
 
-The model uses a volatility-adjusted logistic framework:
+### Estimated Parameters
 
-```
-β_t = [β_min + (β_max - β_min) / (1 + exp(-k × (r_t - m)))] × (1 - λ × σ_t/σ*)
-```
-
-Where:
-- `β_min`, `β_max`: Deposit sensitivity bounds (40% to 70%)
-- `m`: Competition inflection point (2.99% Fed Funds)
-- `k`: Transition steepness (0.59)
-- `λ`: Volatility dampening factor (22.4%)
-
-### Complete Specification
-
-```
-MMDA_Rate_t = α + β_t × FedFunds_t + γ₁ × FHLB_Spread_t + γ₂ × Term_Spread_t + ε_t
-```
+| Parameter | Description | Value |
+|-----------|-------------|-------|
+| α | Intercept | 0.073 |
+| k | Logistic steepness | 0.566 |
+| m | Inflection point | 3.919% |
+| β_min | Lower beta bound | 0.433 |
+| β_max | Upper beta bound | 0.800 |
+| γ_fhlb | FHLB spread coefficient | 1.049 |
+| λ_up | Rising-rate dampening | 0.255 |
+| λ_down | Falling-rate dampening | 0.223 |
 
 ## Data Sources
 
@@ -108,78 +105,38 @@ MMDA_Rate_t = α + β_t × FedFunds_t + γ₁ × FHLB_Spread_t + γ₂ × Term_S
 | ILMDHYLD | Bloomberg/Bankrate | High-yield MMDA rate benchmark |
 | FEDL01 | FRED/Bloomberg | Federal Funds Effective Rate |
 | FHLK3MSPRD | Bloomberg | FHLB vs SOFR 3M liquidity premium |
-| 1Y_3M_SPRD | Bloomberg | 1Y-3M SOFR OIS term spread |
 
 **Sample Period:** January 2017 - March 2025 (99 monthly observations)
 
 ## Use Cases
 
-This model is designed for bank ALM practitioners working on:
-
-- **NII Sensitivity Analysis:** Understanding how deposit costs respond to rate scenarios
+- **NII Sensitivity Analysis:** Deposit cost response to rate scenarios
 - **EVE Calculations:** Duration estimation for non-maturity deposit portfolios
 - **Regulatory Stress Testing:** CCAR, DFAST, Basel III IRRBB
 - **FTP Calibration:** Pricing interest rate risk in deposit products
-- **Strategic Planning:** Balance sheet optimization decisions
-
-## Limitations
-
-- Calibrated on 2017-2025 data; extrapolation beyond 6% Fed Funds requires caution
-- Monthly frequency may miss intra-month dynamics
-- All models exhibit residual autocorrelation (common in financial time series)
-- Model assumes stable competitive structure; may not capture fintech disruption
-
-See the full [model documentation](mmda-dynamic-beta-model-dev-doc.md) for comprehensive discussion of assumptions and limitations.
-
-## Document Generation
-
-The repository includes a template-based document generator for creating SR11-7 compliant model documentation:
-
-### Generate Model Development Document
-
-```bash
-# Generate with default settings
-python generate_model_document.py
-
-# Generate with custom configuration
-python generate_model_document.py --config config/document_config.json --output outputs/Model_Development_Document.md
-
-# Create a sample configuration file
-python generate_model_document.py --create-config
-```
-
-### Customize the Template
-
-1. Edit `config/document_config.json` to set your organization details
-2. Modify `templates/model_development_document_template.md` for structural changes
-3. Run the generator to produce updated documentation
-
-This approach allows you to:
-- Automatically populate tables from model outputs
-- Maintain consistent formatting across updates
-- Easily adapt for different models or organizations
+- **Custom Rate Index:** Deploy as a deposit rate forecasting index in ALM platforms
 
 ## Citation
 
-If you use this model in academic research or publications, please cite:
-
-```
-Chen, C. L. (2026). MMDA Dynamic Beta Repricing Model: A Volatility-Adjusted 
-Framework for Deposit Rate Sensitivity. GitHub Repository.
-https://github.com/deechean/NMD_Beta
+```bibtex
+@article{chen2026dynamic,
+  title={Dynamic Deposit Betas: An Asymmetric Volatility-Adjusted S-Curve
+         Framework for MMDA Rate Sensitivity},
+  author={Chen, Chih L.},
+  journal={SSRN Electronic Journal},
+  year={2026},
+  doi={10.2139/ssrn.6269838},
+  url={https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6269838}
+}
 ```
 
 ## Acknowledgments
 
-This model was developed with assistance from AI systems (Perplexity Labs, Google Gemini Pro 2.5, Anthropic Claude) for computational support, code development, and documentation preparation. All economic reasoning, model specification choices, and business application recommendations reflect the professional judgment of the model owner. See the acknowledgments section in the model documentation for details.
+This model was developed with assistance from AI systems (Perplexity Labs, Google Gemini Pro 2.5, Anthropic Claude) for computational support, code development, and documentation preparation. All economic reasoning, model specification choices, and business application recommendations reflect the professional judgment of the author.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For questions or collaboration opportunities, please open an issue in this repository.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ---
 

@@ -1,0 +1,54 @@
+==========================================================================================
+MODEL COMPARISON REPORT: Enhanced v2.0 vs Benchmarks
+Generated: 2026-02-19 07:20
+==========================================================================================
+
+1. MODEL PERFORMANCE COMPARISON
+------------------------------------------------------------
+  Model                           R²  RMSE(bps)   MAE(bps)        AIC        BIC
+  ───────────────────────────────────────────────────────────────────────────
+  Static OLS                  0.9554      17.51      12.73     -456.0     -450.2
+  Linear ECM                  0.9787      12.12      10.05     -549.2     -537.7
+  2-Regime S-curve ECM        0.9981       3.84       2.77        N/A        N/A
+  Enhanced v2.0 (AR-smooth)   0.9870      10.29       7.99     -434.3     -413.5
+
+2. ENHANCED v2.0 PARAMETER ESTIMATES (with Sandwich SEs)
+------------------------------------------------------------
+  Parameter  Estimate  Naive SE  Sandwich SE  SE Ratio       t-stat      p-value Sig.
+      alpha  0.073187  0.031886     0.054708  1.715745     1.337788 1.809656e-01     
+          k  0.566128  0.006726     0.000850  0.126429   665.775290 0.000000e+00  ***
+          m  3.919251  0.003787     0.000218  0.057692 17939.875908 0.000000e+00  ***
+   beta_min  0.433387  0.001304     0.000252  0.193145  1721.291853 0.000000e+00  ***
+   beta_max  0.800000  0.001524     0.000191  0.125256  4190.888039 0.000000e+00  ***
+ gamma_fhlb  1.049417  0.123254     0.176504  1.432030     5.945571 2.754952e-09  ***
+  lambda_up  0.255096  0.000722     0.000116  0.160368  2201.976623 0.000000e+00  ***
+lambda_down  0.222843  0.006155     0.007567  1.229524    29.448616 0.000000e+00  ***
+
+3. BETA SMOOTHNESS ASSESSMENT
+------------------------------------------------------------
+  Max Δβ constraint (k):      0.0200
+  Max Δβ (unconstrained):     0.0769
+  Max Δβ (smoothed):          0.0200
+  Mean Δβ (unconstrained):    0.0073
+  Mean Δβ (smoothed):         0.0062
+  Periods constrained:        8 / 98
+
+4. RESIDUAL DIAGNOSTICS
+------------------------------------------------------------
+  Enhanced v2.0:
+    Durbin-Watson:     0.6743
+    Ljung-Box(10):     stat=94.9700, p=0.0000
+    Jarque-Bera:       stat=1.7893, p=0.4087
+    Residual mean:     0.00 bps
+    Residual std:      10.29 bps
+
+5. STANDARD ERROR METHODOLOGY
+------------------------------------------------------------
+  Naive SEs: V = H^{-1} (assumes independent observations)
+  Sandwich SEs: V = H^{-1} S H^{-1} (Huber-White with Newey-West HAC)
+  Newey-West lags used: 3
+  SE ratio > 1 indicates naive SEs understate uncertainty
+  SE ratio < 1 indicates the nonlinear curvature of the likelihood
+    surface provides more information than the outer product of scores
+
+==========================================================================================

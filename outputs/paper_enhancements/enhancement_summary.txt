@@ -1,0 +1,26 @@
+PAPER ENHANCEMENT RESULTS SUMMARY
+============================================================
+
+1. OUT-OF-SAMPLE VALIDATION
+   Train: 2017-2021 (60 obs)
+   OOS: 2022-2025 (39 obs)
+   In-sample R²:  0.9645, RMSE: 7.5bps
+   OOS R² (train params): 0.8559, RMSE: 36.0bps
+   OOS Static R²: 0.9059, RMSE: 29.1bps
+   OOS bias (dynamic): 14.1bps
+
+2. ROBUSTNESS: VOLATILITY WINDOWS
+   6m window: R²=0.9826, RMSE=11.94bps
+   12m window: R²=0.9839, RMSE=11.47bps
+   24m window: R²=0.9870, RMSE=10.31bps
+   36m window: R²=0.9876, RMSE=10.07bps
+
+3. EFFECTIVE DURATION AT CURRENT RATE (4.33%)
+   Beta: 0.634
+   Effective Duration: 1.83 years
+   Effective Convexity: -0.251
+
+4. PORTFOLIO EXAMPLE ($10B MMDA, +200bp)
+   12m IE (dynamic): $451.0M
+   12m IE (static):  $317.3M
+   Difference:       $133.7M

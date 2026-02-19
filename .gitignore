@@ -75,7 +75,6 @@ venv.bak/
 Thumbs.db
 
 # Project-specific
-# Keep outputs in repo for reproducibility, but ignore temp files
 *.tmp
 *.temp
 *.log
@@ -84,5 +83,11 @@ Thumbs.db
 ~$*.xlsx
 ~$*.xlsm
 
-# Don't ignore outputs - we want these tracked for reproducibility
-# outputs/
+# Generated PDF (available on SSRN)
+mmda-dynamic-beta-academic-paper-v3.pdf
+
+# Archive of old/unused code (not needed on GitHub)
+archive/
+
+# Writing style guide (personal reference, not part of the model)
+writing_style_guide.md
