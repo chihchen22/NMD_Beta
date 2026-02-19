@@ -41,14 +41,6 @@ python paper_enhancements.py          # OOS validation, duration, portfolio exam
 python regenerate_figures.py          # Data dashboard and visualization figures
 ```
 
-### Generate Paper PDF
-
-Requires [pandoc](https://pandoc.org/) and a LaTeX distribution (e.g., MiKTeX with XeLaTeX):
-
-```bash
-python convert_to_pdf.py
-```
-
 ## Repository Structure
 
 ```
@@ -68,10 +60,6 @@ NMD_Beta/
 ├── regenerate_figures.py                 # Data dashboard and core visualizations
 ├── regenerate_figures_with_ols.py        # Model fit comparison chart
 ├── run_asymmetric_analysis.py            # Asymmetric beta evolution chart
-│
-├── mmda-dynamic-beta-academic-paper-v2.md   # Paper source (Markdown)
-├── convert_to_pdf.py                        # Markdown to PDF via pandoc + XeLaTeX
-├── pandoc_preamble.tex                      # LaTeX preamble for PDF styling
 │
 └── outputs/
     ├── v2_comparison/                    # Model comparison outputs (14 files)

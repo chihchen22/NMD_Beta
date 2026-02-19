@@ -83,14 +83,14 @@ Thumbs.db
 ~$*.xlsx
 ~$*.xlsm
 
-# Generated PDF (available on SSRN)
+# Local-only files (not for public repo)
+convert_to_pdf.py
+pandoc_preamble.tex
+mmda-dynamic-beta-academic-paper-v2.md
 mmda-dynamic-beta-academic-paper-v3.pdf
 
-# Paper source (available on SSRN)
-mmda-dynamic-beta-academic-paper-v2.md
-
-# Archive of old/unused code (not needed on GitHub)
+# Archive of old/unused code
 archive/
 
-# Writing style guide (personal reference, not part of the model)
+# Writing style guide (personal reference)
 writing_style_guide.md
