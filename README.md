@@ -37,7 +37,6 @@ pip install -r requirements.txt
 ```bash
 python regenerate_all_outputs.py      # Core model comparison (14 files)
 python scenario_shock_analysis.py     # Parallel shock scenarios with partial adjustment
-python paper_enhancements.py          # OOS validation, duration, portfolio example, bootstrap
 python regenerate_figures.py          # Data dashboard and visualization figures
 ```
 
@@ -56,7 +55,6 @@ NMD_Beta/
 │
 ├── regenerate_all_outputs.py             # Master output generator (14 files)
 ├── scenario_shock_analysis.py            # Scenario analysis with partial adjustment
-├── paper_enhancements.py                 # OOS, robustness, duration, portfolio, bootstrap
 ├── regenerate_figures.py                 # Data dashboard and core visualizations
 ├── regenerate_figures_with_ols.py        # Model fit comparison chart
 ├── run_asymmetric_analysis.py            # Asymmetric beta evolution chart

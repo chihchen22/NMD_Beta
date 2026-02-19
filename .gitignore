@@ -86,6 +86,7 @@ Thumbs.db
 # Local-only files (not for public repo)
 convert_to_pdf.py
 pandoc_preamble.tex
+paper_enhancements.py
 mmda-dynamic-beta-academic-paper-v2.md
 mmda-dynamic-beta-academic-paper-v3.pdf
 
