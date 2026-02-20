@@ -50,21 +50,20 @@ NMD_Beta/
 ├── bankratemma.csv                        # Source data (Jan 2017 - Mar 2025, n=99)
 │
 ├── enhanced_dynamic_beta_model.py         # Core model: AR smoothing + sandwich SEs
-├── mmda_dynamic_beta_model_complete.py    # Full model framework class
 ├── two_regime_ecm_vs_ml.py               # 2-regime ECM challenger model
 │
 ├── regenerate_all_outputs.py             # Master output generator (14 files)
-├── scenario_shock_analysis.py            # Scenario analysis with partial adjustment
 ├── regenerate_figures.py                 # Data dashboard and core visualizations
-├── regenerate_figures_with_ols.py        # Model fit comparison chart
-├── run_asymmetric_analysis.py            # Asymmetric beta evolution chart
+├── scenario_shock_analysis.py            # Scenario analysis with partial adjustment
 │
-└── outputs/
-    ├── v2_comparison/                    # Model comparison outputs (14 files)
-    ├── scenario_analysis/                # Shock scenario results (4 files)
-    ├── paper_enhancements/               # OOS, duration, portfolio, bootstrap figures
-    ├── figures/                          # Asymmetric beta and model charts
-    └── visualizations/                   # Data dashboard and fit comparison
+├── outputs/
+│   ├── v2_comparison/                    # Model comparison outputs (14 files)
+│   ├── scenario_analysis/                # Shock scenario results
+│   ├── paper_enhancements/               # OOS, duration, portfolio, bootstrap figures
+│   ├── figures/                          # Asymmetric beta and model charts
+│   └── visualizations/                   # Data dashboard and fit comparison
+│
+└── archive/                              # Old/superseded scripts and configs
 ```
 
 ## Model Specification
