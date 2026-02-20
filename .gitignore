@@ -86,6 +86,13 @@ Thumbs.db
 # Local-only files (not for public repo)
 mmda-dynamic-beta-academic-paper-v2.md
 mmda-dynamic-beta-academic-paper-v3.pdf
+convert_to_pdf.py
+pandoc_preamble.tex
+paper_enhancements.py
+writing_style_guide.md
+regenerate_all_outputs.py
+regenerate_figures.py
+two_regime_ecm_vs_ml.py
 
 # Archive of old/unused code
 archive/

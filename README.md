@@ -35,10 +35,11 @@ pip install -r requirements.txt
 ### Reproduce All Results
 
 ```bash
-python regenerate_all_outputs.py      # Core model comparison (14 files)
-python scenario_shock_analysis.py     # Parallel shock scenarios with partial adjustment
-python regenerate_figures.py          # Data dashboard and visualization figures
+python enhanced_dynamic_beta_model.py     # Estimate the core model
+python scenario_shock_analysis.py         # Parallel shock scenarios with partial adjustment
 ```
+
+All model outputs, figures, and scenario results are included in the `outputs/` directory for immediate review without re-running.
 
 ## Repository Structure
 
@@ -50,11 +51,7 @@ NMD_Beta/
 ├── bankratemma.csv                        # Source data (Jan 2017 - Mar 2025, n=99)
 │
 ├── enhanced_dynamic_beta_model.py         # Core model: AR smoothing + sandwich SEs
-├── two_regime_ecm_vs_ml.py               # 2-regime ECM challenger model
-│
-├── regenerate_all_outputs.py             # Master output generator (14 files)
-├── regenerate_figures.py                 # Data dashboard and core visualizations
-├── scenario_shock_analysis.py            # Scenario analysis with partial adjustment
+├── scenario_shock_analysis.py             # Scenario analysis with partial adjustment
 │
 ├── outputs/
 │   ├── v2_comparison/                    # Model comparison outputs (14 files)
@@ -62,8 +59,6 @@ NMD_Beta/
 │   ├── paper_enhancements/               # OOS, duration, portfolio, bootstrap figures
 │   ├── figures/                          # Asymmetric beta and model charts
 │   └── visualizations/                   # Data dashboard and fit comparison
-│
-└── archive/                              # Old/superseded scripts and configs
 ```
 
 ## Model Specification
